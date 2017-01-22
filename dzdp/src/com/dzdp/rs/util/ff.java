@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class ff {
 	public static void main(String[] args) {
-		String sl="E://nio//1.tmp";
+		String sl="E://nio//11.tmp";
 		System.out.println(new File(sl).exists());
 		
 		/*File file = new File("E:\\nio"); //目录路径
