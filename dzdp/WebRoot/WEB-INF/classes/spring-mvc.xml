@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd    
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd    
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler/>
+	<context:component-scan base-package="com.dzdp.rs.controller" />
+	<!-- 处理静态资源 -->
+	<!-- <mvc:resources location="/data/" mapping="/data/**"
+		cache-period="31556926" /> -->
+	<!-- 请求和注解POJO的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<!-- 定义view -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/page/"/> 
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<mvc:annotation-driven />  
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jackson2HttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="jackson2HttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/plain;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		<!-- <property name="maxUploadSize">
+		    <value>20971520</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>10240</value>
+		</property> -->
+	</bean>
+<!-- 	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.rdkl.hdapp.interceptor.SessionInfoInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+</beans>
